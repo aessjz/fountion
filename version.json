@@ -1,0 +1,11 @@
+{
+  "latest": "1.5.5",
+  "release_date": "2026-11-21",
+  "url": "https://github.com/aessjz/fountion/releases/latest/download/dvr-1.5.5.exe",
+  "size": 108860997,
+  "sha256": "8b115fab65b5d4d661dc8b739a86402518ec933c386828bc6c54e21c693a378b",
+  "mandatory": false,
+  "min_version": "1.5.0",
+  "channel": "stable",
+  "notes": "1.5.5：程序文件名统一为「短视频矩阵工具-超人AI实验室.exe」；下载页新增可直接复制的下载直链；各端运行说明同步更新。"
+}
