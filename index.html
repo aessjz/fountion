@@ -61,6 +61,10 @@
   <a class="dl" href="https://github.com/aessjz/fountion/releases/latest/download/scrm-superman-1.5.5-win64.zip">
     下载 Windows 版 <small>zip · 解压即用</small>
   </a>
+  <a class="ghost" href="https://ghfast.top/https://github.com/aessjz/fountion/releases/download/v1.5.5/scrm-superman-1.5.5-win64.zip">
+    加速通道下载 <small>国内网络用这条</small>
+  </a>
+  <p class="note" style="margin:14px 0 0">上面的主按钮直连 GitHub，部分国内网络会提示「网络连接错误」；遇到这种情况点旁边的<strong>加速通道</strong>，或用下方第二条地址复制到浏览器／下载工具。</p>
   <a class="ghost" href="#contact">使用中有问题？联系客服</a>
 
   <div class="card">
@@ -82,12 +86,16 @@
 
   <div class="card">
     <h3>下载地址</h3>
-    <p class="note">下文这条直链可复制到浏览器地址栏直接下载，也可粘贴到迅雷等下载工具里下载。若上方按钮无法点击，用这条链接即可。</p>
+    <p class="note">第一条是 GitHub 原始直链；第二条是国内加速直链，主链接打不开时用它。两条都能复制到浏览器地址栏，也可粘贴进迅雷等下载工具。</p>
     <div class="linkrow">
       <input class="linkinput" id="dlLink" readonly value="https://github.com/aessjz/fountion/releases/latest/download/scrm-superman-1.5.5-win64.zip">
       <button class="copyb" id="btnCopyLink" type="button">复制链接</button>
     </div>
-    <p class="note" style="margin:12px 0 0">下载后是一个 zip 压缩包，解压出来直接双击里面的 exe 就能用，不需要安装。</p>
+    <div class="linkrow" style="margin-top:10px">
+      <input class="linkinput" id="dlLink2" readonly value="https://ghfast.top/https://github.com/aessjz/fountion/releases/download/v1.5.5/scrm-superman-1.5.5-win64.zip">
+      <button class="copyb" id="btnCopyLink2" type="button">复制加速链接</button>
+    </div>
+    <p class="note" style="margin:12px 0 0">下载后是一个 zip 压缩包，解压出来直接双击里面的 exe 就能用，不需要安装。加速通道为第三方转发，只影响下载速度，安装包内容与原链一致。</p>
   </div>
 
   <div class="card" id="contact">
@@ -132,9 +140,13 @@
     }
   }
   var link = document.getElementById("dlLink");
+  var link2 = document.getElementById("dlLink2");
   var wx = document.getElementById("wxId");
   document.getElementById("btnCopyLink").addEventListener("click", function () {
     copyText(link.value, this);
+  });
+  if (link2) document.getElementById("btnCopyLink2").addEventListener("click", function () {
+    copyText(link2.value, this);
   });
   document.getElementById("btnCopyWx").addEventListener("click", function () {
     copyText(wx.value, this);
