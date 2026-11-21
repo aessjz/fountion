@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>一个人就是一个矩阵 · 短视频矩阵工具</title>
+<style>
+  :root{--bg:#0b1320;--card:#131e30;--line:rgba(255,255,255,.08);--tx:#e7edf7;--mut:#8fa0b8;--acc:#4f8cff;--acc2:#22d3ee}
+  *{box-sizing:border-box}
+  body{margin:0;background:radial-gradient(1200px 600px at 70% -10%,#16294a 0%,var(--bg) 55%);color:var(--tx);
+       font-family:"Microsoft YaHei","PingFang SC",system-ui,-apple-system,sans-serif;line-height:1.75}
+  .wrap{max-width:880px;margin:0 auto;padding:56px 24px 80px}
+  .brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--mut);letter-spacing:1px}
+  .brand b{color:var(--acc2);font-weight:600}
+  h1{font-size:42px;margin:26px 0 10px;letter-spacing:1px;font-weight:700;line-height:1.25}
+  h1 span{background:linear-gradient(90deg,#7fb2ff,#22d3ee);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{color:var(--mut);font-size:16px;margin:0 0 26px;max-width:660px}
+  .meta{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--mut);margin-bottom:26px}
+  .meta i{font-style:normal;color:var(--tx)}
+  .dl{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,#4f8cff,#22d3ee);
+      color:#06121f;font-weight:700;font-size:17px;padding:16px 30px;border-radius:12px;text-decoration:none;
+      box-shadow:0 10px 30px rgba(79,140,255,.35);transition:transform .15s}
+  .dl:hover{transform:translateY(-2px)}
+  .dl small{font-weight:600;opacity:.75;font-size:12px}
+  .ghost{display:inline-flex;align-items:center;gap:8px;margin-left:12px;padding:15px 22px;border-radius:12px;
+         border:1px solid var(--line);color:var(--tx);text-decoration:none;font-size:14px}
+  .ghost:hover{border-color:rgba(79,140,255,.5)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin-top:26px}
+  .card h3{margin:0 0 12px;font-size:16px}
+  .note{color:var(--mut);font-size:13.5px;margin:0 0 10px}
+  .steps{counter-reset:s;margin:0;padding:0;list-style:none}
+  .steps li{counter-increment:s;margin:12px 0;padding-left:36px;position:relative;color:#cfdaeb}
+  .steps li:before{content:counter(s);position:absolute;left:0;top:2px;width:24px;height:24px;border-radius:50%;
+    background:rgba(79,140,255,.18);color:#9dc2ff;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center}
+  code{background:rgba(255,255,255,.07);padding:2px 6px;border-radius:6px;font-size:12.5px;word-break:break-all}
+  .linkrow{display:flex;gap:10px;align-items:stretch;flex-wrap:wrap}
+  .linkinput{flex:1;min-width:240px;background:#0d1726;border:1px solid var(--line);color:var(--tx);
+             border-radius:10px;padding:12px 14px;font-size:13px;font-family:Consolas,Menlo,monospace}
+  .copyb{border-radius:10px;padding:10px 18px;font-size:14px;font-weight:600;cursor:pointer;
+         background:rgba(79,140,255,.16);color:#9dc2ff;border:1px solid rgba(79,140,255,.35);white-space:nowrap}
+  .copyb:hover{background:rgba(79,140,255,.26)}
+  .copyb.ok{background:rgba(34,211,238,.18);color:#22d3ee;border-color:rgba(34,211,238,.4)}
+  .foot{margin-top:36px;color:#5d6d84;font-size:12px;text-align:center}
+
+  /* 详情页专属组件 */
+  .kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:6px 0 4px}
+  .kpi div{background:rgba(19,30,48,.72);border:1px solid var(--line);border-radius:12px;padding:16px 16px 14px}
+  .kpi b{display:block;font-size:26px;letter-spacing:.5px;
+         background:linear-gradient(90deg,#7fb2ff,#22d3ee);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .kpi span{font-size:12.5px;color:var(--mut)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:26px}
+  .item{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px}
+  .item h4{margin:0 0 8px;font-size:15px;display:flex;align-items:center;gap:8px}
+  .item h4 em{font-style:normal;font-size:11px;font-weight:600;color:#22d3ee;border:1px solid rgba(34,211,238,.35);
+              background:rgba(34,211,238,.1);border-radius:6px;padding:1px 6px;letter-spacing:.5px}
+  .item p{margin:0;color:var(--mut);font-size:13.5px}
+  .quote{font-size:25px;line-height:1.6;font-weight:700;margin:0 0 10px;letter-spacing:.5px}
+  .quote span{color:#22d3ee}
+  .flow{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0 6px}
+  .flow div{position:relative;background:rgba(13,23,38,.85);border:1px solid var(--line);border-radius:12px;
+            padding:16px 14px;font-size:13px;color:#cfdaeb}
+  .flow b{display:block;font-size:12px;color:#22d3ee;letter-spacing:1px;margin-bottom:6px}
+  .flow i{position:absolute;right:-7px;top:50%;transform:translateY(-50%);font-style:normal;color:#4f8cff;font-size:14px}
+  .tbl{width:100%;border-collapse:collapse;margin-top:6px;font-size:13.5px}
+  .tbl th,.tbl td{border-bottom:1px solid var(--line);padding:11px 10px;text-align:left;vertical-align:top}
+  .tbl th{color:var(--mut);font-weight:600;font-size:12.5px}
+  .tbl td:first-child{color:#cfdaeb;white-space:nowrap}
+  .tbl .win{color:#22d3ee;font-weight:600}
+  .badge{display:inline-block;font-size:12px;color:#9dc2ff;border:1px solid rgba(79,140,255,.35);
+         background:rgba(79,140,255,.12);border-radius:8px;padding:3px 10px;margin:0 8px 8px 0}
+  .cta{background:linear-gradient(135deg,rgba(79,140,255,.16),rgba(34,211,238,.10));
+       border:1px solid rgba(79,140,255,.32);border-radius:16px;padding:26px 26px;margin-top:30px}
+  .cta h3{margin:0 0 8px;font-size:19px}
+  .cta p{margin:0 0 16px;color:var(--mut);font-size:14px}
+  .sec{margin-top:46px}
+  .sec .tag{font-size:12px;color:#22d3ee;letter-spacing:2px;margin-bottom:8px}
+  .sec h2{font-size:24px;margin:0 0 10px;letter-spacing:.5px}
+  @media (max-width:700px){
+    .kpi{grid-template-columns:1fr 1fr}
+    .grid2{grid-template-columns:1fr}
+    .flow{grid-template-columns:1fr 1fr}
+    .flow i{display:none}
+    h1{font-size:30px}
+    .quote{font-size:20px}
+  }
+  @media (max-width:560px){.dl,.ghost{display:flex;justify-content:center;margin-left:0;margin-top:10px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand">短视频矩阵工具 <b>·</b> 超人 AI 实验室</div>
+
+  <h1>一个人，<span>就是一个矩阵</span></h1>
+  <p class="sub">一条素材裂变成几十条成片，一次分发到 15 个平台。别人还在用群发抢位置，你已经用产能把位置铺满。</p>
+
+  <div class="meta">
+    <span>版本 <i>v1.5.5</i></span>
+    <span>系统 <i>Windows 10 / 11 · 64 位</i></span>
+    <span>授权 <i>买断制 · 不按条计费</i></span>
+  </div>
+
+  <a class="dl" href="https://github.com/aessjz/fountion/releases/latest/download/scrm-superman-1.5.5-win64.zip">
+    下载 Windows 版 <small>zip · 解压即用</small>
+  </a>
+  <a class="ghost" href="#price">看授权与价格</a>
+
+  <div class="kpi" style="margin-top:26px">
+    <div><b>15</b><span>个平台一次分发</span></div>
+    <div><b>100+</b><span>单日成片上限</span></div>
+    <div><b>1</b><span>人撑起一个矩阵</span></div>
+    <div><b>0</b><span>按条收费的边际成本</span></div>
+  </div>
+
+  <div class="sec">
+    <div class="tag">THE PROBLEM</div>
+    <h2>你缺的从来不是内容，是产能</h2>
+    <p class="quote">别人一天铺 <span>50 条</span>，你一天做 <span>1 条</span>——差 50 倍的不是努力，是占领流量的位置数。</p>
+    <div class="card">
+      <p class="note" style="color:#cfdaeb;margin:0">
+        平台的推荐机制不看谁更辛苦，只看谁在更多的关键词、更多的时段、更多的账号下持续出现。
+        一条视频只占一个位置；一百条视频占一百个位置。位置越多，被看见的概率越大，流量才可能变成订单。
+        <br><br>
+        手工做视频真正贵的不是剪辑技术，而是<b>重复劳动的时间</b>：找素材、改开头、换封面、配字幕、导片、上传、填标题、选话题、逐个平台发。
+        一条片子 40 分钟，一天做 3 条就到顶了——而这三条，在 15 个平台上本该有 45 个位置，你只用了 3 个。
+      </p>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="tag">WHAT IT DOES</div>
+    <h2>软件在做的四件事</h2>
+    <div class="grid2">
+      <div class="item">
+        <h4>① 一条素材，裂变多条成片 <em>放大</em></h4>
+        <p>同一批画面，自动组合不同开头、不同封面、不同配乐、不同时长节奏，一次导出十几版。不是重复发布同一条，而是每条都不一样。</p>
+      </div>
+      <div class="item">
+        <h4>② 文案直出成片，数字人替你出镜 <em>提效</em></h4>
+        <p>一段文字或一段录音，走完文案、配音、数字人口播、字幕、封面全流程。不用拍摄、不用补光、不用反复重录。</p>
+      </div>
+      <div class="item">
+        <h4>③ 15 个平台，一次铺完 <em>分发</em></h4>
+        <p>账号托管登录，成片一次性按平台规则分发，标题、话题、封面按平台分别填。发布这件事从「一下午」变成「一次点击」。</p>
+      </div>
+      <div class="item">
+        <h4>④ 本地素材库，越用越值钱 <em>复利</em></h4>
+        <p>过往积累的画面、封面、音色、BGM、文案、模板统一入库。你的经验不再一次性消耗，而是沉淀成可反复调用的资产。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="tag">THE AMPLIFIER</div>
+    <h2>流量放大器：素材进，位置出</h2>
+    <div class="flow">
+      <div><b>STEP 1</b>一批原始素材<i>›</i></div>
+      <div><b>STEP 2</b>批量混剪成 N 版<i>›</i></div>
+      <div><b>STEP 3</b>按平台补齐标题封面<i>›</i></div>
+      <div><b>STEP 4</b>15 平台同时铺开</div>
+    </div>
+    <div class="card">
+      <p class="note" style="color:#cfdaeb;margin:0">
+        1 条素材 × 8 个版本 × 15 个平台 = <b style="color:#22d3ee">120 个曝光位</b>。
+        同样的一天，手工单干只有 1 到 3 个位置，而你可以铺满 120 个。
+        <br><br>
+        AI 时代拼的不是「会不会用工具」，而是<b>把流量倍增能力装进日常动作里</b>。
+        当同行还在群里刷屏、发广告、靠人力堆账号，你用产能把同样的时间放大几十倍——一个人跑出机构的量级。
+      </p>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="tag">COMPARISON</div>
+    <h2>同样的 8 小时，三种做法</h2>
+    <table class="tbl">
+      <tr><th>维度</th><th>自己单干</th><th>外包/团队</th><th class="win">本软件</th></tr>
+      <tr><td>日更上限</td><td>1-3 条</td><td>10-20 条</td><td class="win">50-100+ 条</td></tr>
+      <tr><td>覆盖平台</td><td>2-3 个</td><td>3-5 个</td><td class="win">15 个</td></tr>
+      <tr><td>单条时间成本</td><td>30-60 分钟</td><td>沟通+返工</td><td class="win">近 0（批量出）</td></tr>
+      <tr><td>单条费用</td><td>自己的时间</td><td>按条付费</td><td class="win">0（买断后不限条）</td></tr>
+      <tr><td>扩矩阵方式</td><td>加班</td><td>加人加钱</td><td class="win">换素材、加账号</td></tr>
+      <tr><td>素材复用</td><td>靠记忆翻硬盘</td><td>靠人传人</td><td class="win">本地库随取随用</td></tr>
+    </table>
+  </div>
+
+  <div class="sec" id="price">
+    <div class="tag">LICENSE &amp; PRICING</div>
+    <h2>授权与价格：买断，不按条收费</h2>
+    <div class="card">
+      <p class="note" style="color:#cfdaeb;margin:0 0 12px">
+        市面上多数矩阵工具按「条数」或「账号数」收费——你发得越多，付得越多，产能越高成本越高，这叫租金，不叫工具。
+        这套软件反过来：<b>一次授权，产量不设限</b>。
+      </p>
+      <span class="badge">不限成片条数</span>
+      <span class="badge">不限导出次数</span>
+      <span class="badge">不按平台抽成</span>
+      <span class="badge">按年 / 永久两档</span>
+      <span class="badge">本地运行 · 离线可用</span>
+      <span class="badge">到期不锁历史数据</span>
+      <div class="core" style="margin-top:14px">
+        <p class="note" style="margin:0">
+          · <b>年授权</b>：适合先跑通一个账号、验证变现模型；<br>
+          · <b>永久授权</b>：适合已经稳定出片、要靠量抢流量的阶段，长期算下来单条成本趋近于 0；<br>
+          · <b>多机 / 企业部署</b>：团队多台电脑同时跑，单独报价，含统一配置与更新服务。
+        </p>
+      </div>
+      <p class="note" style="margin:12px 0 0">具体价格按当前档位与机器数量报，加微信直接问，不走复杂流程。</p>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="tag">HOW TO START</div>
+    <h2>三步装好，今天就能开始铺</h2>
+    <div class="card">
+      <ol class="steps">
+        <li>下载 zip，解压到任意文件夹（不要直接双击压缩包里的程序）。</li>
+        <li>双击 <code>短视频矩阵工具-超人AI实验室.exe</code>，云端参数已内置，首次启动直接可用，不需要填任何 Key。</li>
+        <li>进「视频库」放素材 → 「混剪」批量出片 → 「发布」勾选平台，一次铺完。</li>
+      </ol>
+      <p class="note" style="margin:10px 0 0">首次运行若提示 7 天试用，属正常；到期后在软件内输入授权码即可继续，历史素材与任务不会丢。</p>
+    </div>
+  </div>
+
+  <div class="cta">
+    <h3>现在就把你的产能，换成位置数</h3>
+    <p>下载安装包先跑通一条片子，再决定要不要把它变成你的日常生产线。</p>
+    <a class="dl" href="https://github.com/aessjz/fountion/releases/latest/download/scrm-superman-1.5.5-win64.zip">下载 Windows 版 <small>179.6 MB</small></a>
+    <a class="ghost" href="https://ghfast.top/https://github.com/aessjz/fountion/releases/download/v1.5.5/scrm-superman-1.5.5-win64.zip">加速通道下载</a>
+  </div>
+
+  <div class="card" id="contact">
+    <h3>联系客服</h3>
+    <p class="note" style="margin-bottom:10px">授权报价、多机部署、批量采购、使用问题，都可以直接加微信。</p>
+    <div class="linkrow">
+      <input class="linkinput" id="wxId" readonly value="DAJNG182">
+      <button class="copyb" id="btnCopyWx" type="button">复制微信</button>
+    </div>
+  </div>
+
+  <div class="foot">© 2026 超人 AI 实验室 · 短视频矩阵工具</div>
+</div>
+
+<script>
+(function () {
+  function copyText(text, btn) {
+    const done = function () {
+      const old = btn.textContent;
+      btn.textContent = "已复制";
+      btn.classList.add("ok");
+      setTimeout(function () { btn.textContent = old; btn.classList.remove("ok"); }, 1600);
+    };
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(done).catch(fallback);
+    } else { fallback(); }
+    function fallback() {
+      const ta = document.createElement("textarea");
+      ta.value = text; ta.setAttribute("readonly", "");
+      ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand("copy"); done(); } catch (e) {
+        btn.textContent = "请手动复制";
+        setTimeout(function () { btn.textContent = "复制微信"; }, 1600);
+      }
+      document.body.removeChild(ta);
+    }
+  }
+  var wx = document.getElementById("wxId");
+  document.getElementById("btnCopyWx").addEventListener("click", function () {
+    copyText(wx.value, this);
+  });
+})();
+</script>
+</body>
+</html>
