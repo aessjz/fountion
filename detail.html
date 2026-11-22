@@ -8,6 +8,7 @@
   :root{--bg:#0b1320;--card:#131e30;--line:rgba(255,255,255,.08);--tx:#e7edf7;--mut:#8fa0b8;--acc:#4f8cff;--acc2:#22d3ee}
   *{box-sizing:border-box}
   body{margin:0;background:radial-gradient(1200px 600px at 70% -10%,#16294a 0%,var(--bg) 55%);color:var(--tx);
+       font-size:16px;-webkit-text-size-adjust:100%;
        font-family:"Microsoft YaHei","PingFang SC",system-ui,-apple-system,sans-serif;line-height:1.75}
   .wrap{max-width:880px;margin:0 auto;padding:56px 24px 80px}
   .brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--mut);letter-spacing:1px}
@@ -61,6 +62,21 @@
             padding:16px 14px;font-size:13px;color:#cfdaeb}
   .flow b{display:block;font-size:12px;color:#22d3ee;letter-spacing:1px;margin-bottom:6px}
   .flow i{position:absolute;right:-7px;top:50%;transform:translateY(-50%);font-style:normal;color:#4f8cff;font-size:14px}
+  .vs{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:30px}
+  .vs .col{border-radius:14px;padding:20px 20px 18px}
+  .vs .bad{background:rgba(255,99,99,.05);border:1px solid rgba(255,110,110,.28)}
+  .vs .good{background:rgba(34,211,238,.06);border:1px solid rgba(34,211,238,.38);box-shadow:0 10px 36px rgba(34,211,238,.10)}
+  .vs h4{margin:0 0 12px;font-size:15.5px;display:flex;align-items:center;gap:9px;letter-spacing:.3px}
+  .vs .mark{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex:none}
+  .vs .bad .mark{background:rgba(255,110,110,.16);color:#ff8b8b}
+  .vs .good .mark{background:rgba(34,211,238,.18);color:#22d3ee}
+  .vs ul{margin:0;padding-left:18px;font-size:13.5px}
+  .vs .bad ul{color:#c9b7b7}
+  .vs .good ul{color:#cfdaeb}
+  .vs li{margin:8px 0}
+  .vsline{margin:20px 0 0;text-align:center;font-size:23px;font-weight:700;line-height:1.55;letter-spacing:.5px}
+  .vsline span{color:#22d3ee}
+  .vsnote{text-align:center;color:var(--mut);font-size:13.5px;margin:8px 0 0}
   .tbl{width:100%;border-collapse:collapse;margin-top:6px;font-size:13.5px}
   .tbl th,.tbl td{border-bottom:1px solid var(--line);padding:11px 10px;text-align:left;vertical-align:top}
   .tbl th{color:var(--mut);font-weight:600;font-size:12.5px}
@@ -76,12 +92,42 @@
   .sec .tag{font-size:12px;color:#22d3ee;letter-spacing:2px;margin-bottom:8px}
   .sec h2{font-size:24px;margin:0 0 10px;letter-spacing:.5px}
   @media (max-width:700px){
-    .kpi{grid-template-columns:1fr 1fr}
-    .grid2{grid-template-columns:1fr}
-    .flow{grid-template-columns:1fr 1fr}
+    .wrap{padding:36px 16px 60px}
+    h1{font-size:27px;line-height:1.32}
+    .sub{font-size:15px;line-height:1.7;max-width:none}
+    .meta{gap:8px 14px;font-size:12.5px}
+    .kpi{grid-template-columns:1fr 1fr;gap:10px}
+    .kpi div{padding:14px}
+    .kpi b{font-size:22px}
+    .kpi span{font-size:12.5px;line-height:1.5}
+    .grid2{grid-template-columns:1fr;gap:12px}
+    .item{padding:18px}
+    .item h4{font-size:15px}
+    .item p{font-size:14.5px}
+    .quote{font-size:19px;line-height:1.55}
+    .flow{grid-template-columns:1fr 1fr;gap:8px}
+    .flow div{font-size:13.5px;padding:12px}
     .flow i{display:none}
-    h1{font-size:30px}
-    .quote{font-size:20px}
+    .card{padding:18px 16px}
+    .card h3{font-size:15.5px}
+    .note{font-size:14.5px;line-height:1.75}
+    .tbl{font-size:12.5px}
+    .tbl th,.tbl td{padding:9px 5px}
+    .tbl td:first-child{white-space:normal}
+    .sec{margin-top:36px}
+    .sec h2{font-size:21px}
+    .badge{font-size:12px;margin-bottom:6px}
+    .linkrow{flex-direction:column}
+    .linkinput{min-width:0;width:100%}
+    .copyb{width:100%;padding:12px}
+    .cta{padding:20px 16px}
+    .cta h3{font-size:18px}
+    .steps li{padding-left:30px;font-size:14.5px}
+    .vs{grid-template-columns:1fr;gap:10px;margin-top:24px}
+    .vs .col{padding:16px}
+    .vs ul{font-size:14px}
+    .vsline{font-size:18px;text-align:left;margin-top:16px;line-height:1.55}
+    .vsnote{text-align:left;font-size:13px}
   }
   @media (max-width:560px){.dl,.ghost{display:flex;justify-content:center;margin-left:0;margin-top:10px}}
 </style>
@@ -90,38 +136,54 @@
 <div class="wrap">
   <div class="brand">短视频矩阵工具 <b>·</b> 超人 AI 实验室</div>
 
-  <h1>一个人，<span>就是一个矩阵</span></h1>
-  <p class="sub">一条素材裂变成几十条成片，一次分发到 15 个平台。别人还在用群发抢位置，你已经用产能把位置铺满。</p>
+  <h1>一个月的视频，<span>一小时干完</span></h1>
+  <p class="sub">用你自己的素材做多维混剪：一条素材裂变几百条不重复的成片，30 个平台一次铺开。不是复制，是真正能起量的优质裂变。</p>
 
   <div class="meta">
     <span>版本 <i>v1.5.5</i></span>
     <span>系统 <i>Windows 10 / 11 · 64 位</i></span>
-    <span>授权 <i>买断制 · 不按条计费</i></span>
+    <span>算力 <i>无需购买</i></span>
   </div>
-
-  <a class="dl" href="https://github.com/aessjz/fountion/releases/latest/download/scrm-superman-1.5.5-win64.zip">
-    下载 Windows 版 <small>zip · 解压即用</small>
-  </a>
-  <a class="ghost" href="#price">看授权与价格</a>
 
   <div class="kpi" style="margin-top:26px">
-    <div><b>15</b><span>个平台一次分发</span></div>
-    <div><b>100+</b><span>单日成片上限</span></div>
-    <div><b>1</b><span>人撑起一个矩阵</span></div>
-    <div><b>0</b><span>按条收费的边际成本</span></div>
+    <div><b>30</b><span>个平台一次分发</span></div>
+    <div><b>500</b><span>单日成片上限（条）</span></div>
+    <div><b>1h</b><span>干完一个月的量</span></div>
+    <div><b>0</b><span>按条计费的边际成本</span></div>
   </div>
 
+  <div class="vs">
+    <div class="col bad">
+      <h4><span class="mark">✕</span>复制式裂变：数字人 / 搬运 / 套模板</h4>
+      <ul>
+        <li>同一张脸、同一段声音、同一条片子，改个标题重复发</li>
+        <li>平台一眼识别：同质化、搬运、低质内容</li>
+        <li>发得越多越限流，账号权重越做越低</li>
+      </ul>
+    </div>
+    <div class="col good">
+      <h4><span class="mark">✓</span>优质混剪裂变：本软件</h4>
+      <ul>
+        <li>素材是你自己的，镜头、开头、节奏、封面、配乐逐条不同</li>
+        <li>每条都是新内容，过查重、经得起人工看</li>
+        <li>发得越多账号越稳，平台才敢持续给量</li>
+      </ul>
+    </div>
+  </div>
+  <p class="vsline">复制不叫裂变，<span>能过查重的混剪才叫裂变。</span></p>
+  <p class="vsnote">平台不鼓励照抄，只奖励原创的多样性——这就是它和套壳工具最本质的差别。</p>
+
   <div class="sec">
-    <div class="tag">THE PROBLEM</div>
-    <h2>你缺的从来不是内容，是产能</h2>
-    <p class="quote">别人一天铺 <span>50 条</span>，你一天做 <span>1 条</span>——差 50 倍的不是努力，是占领流量的位置数。</p>
+    <div class="tag">WHY IT MATTERS</div>
+    <h2>AI 时代，产能提效才是制胜的关键</h2>
+    <p class="quote">过去一天做 <span>一条</span>，现在用工具提效、优质混剪，一天做 <span>一百条</span>。</p>
     <div class="card">
       <p class="note" style="color:#cfdaeb;margin:0">
-        平台的推荐机制不看谁更辛苦，只看谁在更多的关键词、更多的时段、更多的账号下持续出现。
-        一条视频只占一个位置；一百条视频占一百个位置。位置越多，被看见的概率越大，流量才可能变成订单。
+        做视频真正贵的不是剪辑技术，而是重复劳动的时间：找素材、改开头、换封面、配字幕、导片、写标题、选话题、逐个平台上传。一条片子四十分钟，一天三条就到顶。
         <br><br>
-        手工做视频真正贵的不是剪辑技术，而是<b>重复劳动的时间</b>：找素材、改开头、换封面、配字幕、导片、上传、填标题、选话题、逐个平台发。
-        一条片子 40 分钟，一天做 3 条就到顶了——而这三条，在 15 个平台上本该有 45 个位置，你只用了 3 个。
+        同样的动作交给工具批量执行，一条素材就能裂变出几十到几百条不同的成片，30 个平台一次铺开。一天做一条变成一天做一百条，产量不是线性增长，是<b>倍增</b>。
+        <br><br>
+        省下来的时间，意味着自由，或者更大的财富——你可以用它去选更好的选题、谈更多的合作、做更高价值的事，而不是把命耗在导出进度条上。
       </p>
     </div>
   </div>
@@ -131,15 +193,15 @@
     <h2>软件在做的四件事</h2>
     <div class="grid2">
       <div class="item">
-        <h4>① 一条素材，裂变多条成片 <em>放大</em></h4>
-        <p>同一批画面，自动组合不同开头、不同封面、不同配乐、不同时长节奏，一次导出十几版。不是重复发布同一条，而是每条都不一样。</p>
+        <h4>① 一条素材，裂变几百条成片 <em>裂变</em></h4>
+        <p>同一批画面，自动组合不同开头、不同封面、不同配乐、不同时长节奏，一条素材能导出几十到几百个版本。不是把同一条重复发出去，而是每条都不一样。</p>
       </div>
       <div class="item">
         <h4>② 文案直出成片，数字人替你出镜 <em>提效</em></h4>
         <p>一段文字或一段录音，走完文案、配音、数字人口播、字幕、封面全流程。不用拍摄、不用补光、不用反复重录。</p>
       </div>
       <div class="item">
-        <h4>③ 15 个平台，一次铺完 <em>分发</em></h4>
+        <h4>③ 30 个平台，一次铺完 <em>分发</em></h4>
         <p>账号托管登录，成片一次性按平台规则分发，标题、话题、封面按平台分别填。发布这件事从「一下午」变成「一次点击」。</p>
       </div>
       <div class="item">
@@ -151,17 +213,17 @@
 
   <div class="sec">
     <div class="tag">THE AMPLIFIER</div>
-    <h2>流量放大器：素材进，位置出</h2>
+    <h2>流量放大器：素材进，成片铺出</h2>
     <div class="flow">
       <div><b>STEP 1</b>一批原始素材<i>›</i></div>
-      <div><b>STEP 2</b>批量混剪成 N 版<i>›</i></div>
+      <div><b>STEP 2</b>优质混剪成百版<i>›</i></div>
       <div><b>STEP 3</b>按平台补齐标题封面<i>›</i></div>
-      <div><b>STEP 4</b>15 平台同时铺开</div>
+      <div><b>STEP 4</b>30 平台同时铺开</div>
     </div>
     <div class="card">
       <p class="note" style="color:#cfdaeb;margin:0">
-        1 条素材 × 8 个版本 × 15 个平台 = <b style="color:#22d3ee">120 个曝光位</b>。
-        同样的一天，手工单干只有 1 到 3 个位置，而你可以铺满 120 个。
+        1 条素材 × 上百个版本 × 30 个平台 = <b style="color:#22d3ee">数千个曝光位</b>。
+        过去一个月才铺出来的位置，现在一个小时就铺满。
         <br><br>
         AI 时代拼的不是「会不会用工具」，而是<b>把流量倍增能力装进日常动作里</b>。
         当同行还在群里刷屏、发广告、靠人力堆账号，你用产能把同样的时间放大几十倍——一个人跑出机构的量级。
@@ -171,36 +233,38 @@
 
   <div class="sec">
     <div class="tag">COMPARISON</div>
-    <h2>同样的 8 小时，三种做法</h2>
+    <h2>同样的 8 小时，产出差上百倍</h2>
     <table class="tbl">
-      <tr><th>维度</th><th>自己单干</th><th>外包/团队</th><th class="win">本软件</th></tr>
-      <tr><td>日更上限</td><td>1-3 条</td><td>10-20 条</td><td class="win">50-100+ 条</td></tr>
-      <tr><td>覆盖平台</td><td>2-3 个</td><td>3-5 个</td><td class="win">15 个</td></tr>
+      <tr><th>维度</th><th>过去单干</th><th>外包/团队</th><th class="win">本软件</th></tr>
+      <tr><td>日更上限</td><td>1-3 条</td><td>10-20 条</td><td class="win">500 条</td></tr>
+      <tr><td>覆盖平台</td><td>2-3 个</td><td>3-5 个</td><td class="win">30 个</td></tr>
+      <tr><td>一条素材的产出</td><td>1 条</td><td>3-5 条</td><td class="win">几十到几百条</td></tr>
       <tr><td>单条时间成本</td><td>30-60 分钟</td><td>沟通+返工</td><td class="win">近 0（批量出）</td></tr>
-      <tr><td>单条费用</td><td>自己的时间</td><td>按条付费</td><td class="win">0（买断后不限条）</td></tr>
+      <tr><td>单条费用</td><td>自己的时间</td><td>按条付费</td><td class="win">0（买断后无限用）</td></tr>
       <tr><td>扩矩阵方式</td><td>加班</td><td>加人加钱</td><td class="win">换素材、加账号</td></tr>
-      <tr><td>素材复用</td><td>靠记忆翻硬盘</td><td>靠人传人</td><td class="win">本地库随取随用</td></tr>
     </table>
   </div>
 
   <div class="sec" id="price">
-    <div class="tag">LICENSE &amp; PRICING</div>
-    <h2>授权与价格：买断，不按条收费</h2>
+    <div class="tag">LICENSE</div>
+    <h2>无需算力，不按条计费，可无限使用</h2>
     <div class="card">
       <p class="note" style="color:#cfdaeb;margin:0 0 12px">
-        市面上多数矩阵工具按「条数」或「账号数」收费——你发得越多，付得越多，产能越高成本越高，这叫租金，不叫工具。
-        这套软件反过来：<b>一次授权，产量不设限</b>。
+        多数矩阵工具按「条数」或「账号数」收费：你发得越多，付得越多，产能越高成本越高，这叫租金，不叫工具。
+        这套软件反过来——装在你自己电脑上跑，<b>不买云算力，不按条抽成，产量没有上限</b>。
+        <br><br>
+        今天的成片量从一天 3 条变成一天 500 条，成本却是一条也不多付。这就是产能提效真正的价值：把可变成本变成一次性投入。
       </p>
-      <span class="badge">不限成片条数</span>
+      <span class="badge">无需额外算力</span>
+      <span class="badge">不按条计费</span>
+      <span class="badge">可无限使用</span>
       <span class="badge">不限导出次数</span>
-      <span class="badge">不按平台抽成</span>
-      <span class="badge">按年 / 永久两档</span>
       <span class="badge">本地运行 · 离线可用</span>
       <span class="badge">到期不锁历史数据</span>
-      <div class="core" style="margin-top:14px">
+      <div style="margin-top:14px">
         <p class="note" style="margin:0">
-          · <b>年授权</b>：适合先跑通一个账号、验证变现模型；<br>
-          · <b>永久授权</b>：适合已经稳定出片、要靠量抢流量的阶段，长期算下来单条成本趋近于 0；<br>
+          · <b>年授权</b>：先跑通一个账号、验证变现模型；<br>
+          · <b>永久授权</b>：已经稳定出片、要靠量抢流量的阶段，长期单条成本趋近于 0；<br>
           · <b>多机 / 企业部署</b>：团队多台电脑同时跑，单独报价，含统一配置与更新服务。
         </p>
       </div>
@@ -222,10 +286,9 @@
   </div>
 
   <div class="cta">
-    <h3>现在就把你的产能，换成位置数</h3>
-    <p>下载安装包先跑通一条片子，再决定要不要把它变成你的日常生产线。</p>
-    <a class="dl" href="https://github.com/aessjz/fountion/releases/latest/download/scrm-superman-1.5.5-win64.zip">下载 Windows 版 <small>179.6 MB</small></a>
-    <a class="ghost" href="https://ghfast.top/https://github.com/aessjz/fountion/releases/download/v1.5.5/scrm-superman-1.5.5-win64.zip">加速通道下载</a>
+    <h3>把一个月，压进一小时</h3>
+    <p>需要安装包、授权报价，或者团队多机部署的方案，直接加微信说明情况，我按你的场景给方案。</p>
+    <p style="margin:0;color:#cfdaeb;font-size:15px">客服微信：<b style="color:#22d3ee;font-size:18px;letter-spacing:1px">DAJNG182</b></p>
   </div>
 
   <div class="card" id="contact">
